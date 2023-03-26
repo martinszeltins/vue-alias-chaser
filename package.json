@@ -2,12 +2,20 @@
   "name": "vue-alias-chaser",
   "displayName": "Vue Alias Chaser",
   "description": "Open the actual Vue component instead of components.d.ts file",
+  "author": "Martins Zeltins <martins@martinsz.lv>",
+  "homepage": "https://github.com/martinszeltins/vue-alias-chaser",
+  "publisher": "MartinsZeltins",
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.76.0"
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "vue",
+    "alias",
+    "definition"
   ],
   "activationEvents": [
     "onLanguage:vue",
@@ -29,6 +37,10 @@
     }
   },
   "icon": "res/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinszeltins/vue-alias-chaser.git"
+  },
   "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
