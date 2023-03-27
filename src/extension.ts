@@ -96,6 +96,14 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     );
+
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+            if (editor && editor.document.fileName.endsWith('components.d.ts')) {
+                await vscode.commands.executeCommand('workbench.action.navigateBack');
+            }
+        })
+    );
 }
 
 export function deactivate() {}
