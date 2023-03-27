@@ -24,7 +24,16 @@ const waitUntil = (watchSource: () => boolean): Promise<void> => {
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.workspace.onDidOpenTextDocument(async (document) => {
+            
             if (document.fileName.endsWith('.d.ts')) {
+                const config = vscode.workspace.getConfiguration();
+                const projectDirPath = config.get<string>('vueProjectPath', '');
+                
+                if (!projectDirPath) {
+                    vscode.window.showInformationMessage('[VueAliasChaser]: Vue Project Path is not configured in workspace settings!');
+                    return;
+                }
+
                 await waitUntil(() => {
                     let editor = vscode.window.activeTextEditor;
 
@@ -62,6 +71,14 @@ export function activate(context: vscode.ExtensionContext) {
                     const config = vscode.workspace.getConfiguration();
                     const projectDirPath = config.get<string>('vueProjectPath', '');
                     const targetPath = `${projectDirPath}${importPath}`;
+
+                    // Move the selection cursor to the beginning of the file at line 1 and column 1.
+                    const startPosition = new vscode.Position(0, 0);
+                    const endPosition = new vscode.Position(0, 0);
+                    const newSelection = new vscode.Selection(startPosition, endPosition);
+                    editor!.selection = newSelection;
+
+                    // Now open the file itself.
                     const document = await vscode.workspace.openTextDocument(targetPath);
                     vscode.window.showTextDocument(document);
 
